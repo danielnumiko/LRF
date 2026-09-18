@@ -58,6 +58,17 @@
   --accent-skills: 122 82 0;                       /* AA-safe ink over --theme-yellow */
   --accent-heritage: 27 62 122;                    /* AA-safe ink over --theme-blue */
 
+}
+
+/* The fluid engine and everything derived from it.
+   Declared on .lrf-page as well as :root because custom properties resolve
+   var() at the element that declares them: --f-base computed on :root bakes
+   in :root's --fluid-bp, so overriding --fluid-screen further down would do
+   nothing. Re-declaring the scale here lets .lrf-page derive its own — which
+   is what the review frame relies on to preview a true 1280 or 375 regardless
+   of the browser window. */
+:root,
+.lrf-page{
   /* --- Fluid engine (drives every size + space token below) --- */
   --fluid-min-width: 320;
   --fluid-max-width: 2560;
@@ -114,4 +125,4 @@
   --focus-width: 2px;
   --focus-offset: 4px;
 }
-@media (min-width: 2560px){ :root{ --fluid-screen: calc(var(--fluid-max-width) * 1px); } }
+@media (min-width: 2560px){ :root, .lrf-page{ --fluid-screen: calc(var(--fluid-max-width) * 1px); } }

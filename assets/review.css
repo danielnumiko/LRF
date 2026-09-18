@@ -34,6 +34,12 @@
               0 32px 64px rgba(var(--foreground) / 0.08);
 }
 .lrf-framed .lrf-page{
+  /* The fluid type/space engine interpolates off --fluid-screen, which is
+     100vw in the shipped page. Inside a frame that would size everything to
+     the browser window instead of the frame, so a 1280 frame on a 1600 window
+     renders 1600-sized type in a 1280 box. Re-point it at the frame and
+     recompute --fluid-bp here so the whole scale inherits from it. */
+  --fluid-screen: var(--frame-w, 1280px);
   width: var(--frame-w, 1280px);
   height: var(--frame-h, 836px);
   overflow-y: auto;

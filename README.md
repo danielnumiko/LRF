@@ -5,8 +5,12 @@ notes* Claude Design project. No build step, no framework, no runtime
 dependency: open `index.html` off a static server.
 
 ```bash
-python3 -m http.server 4173
+python3 serve.py
 ```
+
+`serve.py` is `http.server` with `Cache-Control: no-store`. Plain
+`python3 -m http.server` works too, but the browser will reuse a stale
+stylesheet after an edit, which looks exactly like the change not working.
 
 ## Files
 
