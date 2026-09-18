@@ -12,7 +12,13 @@ import { pack, promoteForBento } from "./bento.js";
 const root = document.documentElement;
 const layoutParam = new URLSearchParams(location.search).get("layout");
 if (layoutParam === "columns" || layoutParam === "bento") root.dataset.layout = layoutParam;
-const LAYOUT = root.dataset.layout === "bento" ? "bento" : "columns";
+let LAYOUT = root.dataset.layout === "bento" ? "bento" : "columns";
+
+// What actually scrolls the page: the window normally, or the review frame
+// when the scaffolding has shrunk .lrf-page into one.
+const page = document.getElementById("lrf-page");
+const frame = () => (page.scrollHeight > page.clientHeight + 1 &&
+  getComputedStyle(page).overflowY !== "visible") ? page : null;
 
 const byKey = Object.fromEntries(THEMES.map((t) => [t.key, t]));
 const selected = new Set();
@@ -140,18 +146,28 @@ function showDrill(i) {
   $("[data-back]", sheetDrill).focus();
 }
 
+// The sheet overlays whatever is scrolling — the window, or the review frame.
+function placeSheet() {
+  if (sheet.hidden) return;
+  const host = frame();
+  sheet.style.top = (host ? host.scrollTop : scrollY) + "px";
+  sheet.style.height = (host ? host.clientHeight : innerHeight) + "px";
+}
+
 function openMenu() {
   lastFocus = document.activeElement;
   showRoot();
   sheet.hidden = false;
+  placeSheet();
   menuToggle.setAttribute("aria-expanded", "true");
-  document.body.style.overflow = "hidden";
+  (frame() || document.body).style.overflow = "hidden";
   $(".lrf-sheet__close", sheet).focus();
 }
 
 function closeMenu() {
   sheet.hidden = true;
   menuToggle.setAttribute("aria-expanded", "false");
+  page.style.overflow = "";
   document.body.style.overflow = "";
   if (lastFocus) lastFocus.focus();
 }
@@ -261,8 +277,28 @@ const grid = $("#stories-grid");
 const stage = $("#stories-stage");
 const empty = $("#stories-empty");
 
-grid.className = LAYOUT === "bento" ? "lrf-grid" : "lrf-grid lrf-cols3";
-stage.className = LAYOUT === "bento" ? "lrf-stage" : "lrf-stage lrf-stage-clip";
+function applyLayoutClasses() {
+  grid.className = LAYOUT === "bento" ? "lrf-grid" : "lrf-grid lrf-cols3";
+  stage.className = LAYOUT === "bento" ? "lrf-stage" : "lrf-stage lrf-stage-clip";
+}
+applyLayoutClasses();
+
+// Switching concept at runtime is a review affordance (see review.js), not
+// something the shipped page does for a visitor.
+export function setLayout(next) {
+  if ((next !== "columns" && next !== "bento") || next === LAYOUT) return;
+  parallax.stop();
+  LAYOUT = next;
+  root.dataset.layout = next;
+  applyLayoutClasses();
+  render();
+}
+
+export function getLayout() { return LAYOUT; }
+
+// The review scaffolding calls this after resizing the frame, so the parallax
+// re-measures against the new width.
+export function refresh() { parallax.sync(); }
 
 function cardMarkup(cell) {
   const { story, cls, filler } = cell;
@@ -343,10 +379,14 @@ const parallax = (() => {
     sizeStage();
     const box = grid.getBoundingClientRect();
     if (!box.height) return;
+    // Measure against the framed viewport when there is one (the prototype
+    // scrolls inside it), otherwise the window.
+    const host = frame();
+    const topRef = host ? host.getBoundingClientRect().top : 0;
     // 0 while the grid's top edge is still below the viewport top — so the
     // grid sits flush against the filter strip at rest — then 1 by the time
     // its bottom edge reaches the viewport top.
-    const p = Math.max(0, Math.min(1, -box.top / box.height));
+    const p = Math.max(0, Math.min(1, (topRef - box.top) / box.height));
     const cells = [...grid.children];
     const lefts = cells.map((li) => Math.round(li.offsetLeft));
     const tracks = [...new Set(lefts)].sort((x, y) => x - y);
@@ -375,6 +415,7 @@ const parallax = (() => {
     running = false;
     if (onScroll) {
       window.removeEventListener("scroll", onScroll);
+      document.removeEventListener("scroll", onScroll, { capture: true });
       window.removeEventListener("resize", onScroll);
       onScroll = null;
     }
@@ -388,12 +429,13 @@ const parallax = (() => {
   function sync() {
     const wanted = LAYOUT === "columns" &&
       !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
-      document.documentElement.clientWidth >= 768;
+      (frame() || document.documentElement).clientWidth >= 768;
     if (!wanted) { stop(); return; }
     if (running) { draw(false); return; }
     running = true;
-    onScroll = () => draw(false);
+    onScroll = () => { draw(false); placeSheet(); };
     window.addEventListener("scroll", onScroll, { passive: true });
+    document.addEventListener("scroll", onScroll, { capture: true, passive: true });
     window.addEventListener("resize", onScroll);
     const tick = () => {
       if (!running) return;
@@ -407,7 +449,8 @@ const parallax = (() => {
   return { sync, stop };
 })();
 
-window.addEventListener("resize", () => parallax.sync());
+window.addEventListener("resize", () => { parallax.sync(); placeSheet(); });
+document.addEventListener("scroll", placeSheet, { capture: true, passive: true });
 
 syncFilterUi();
 render();

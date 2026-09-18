@@ -127,9 +127,13 @@
 }
 
 /* --- Mobile menu sheet ---------------------------------------------------- */
+/* Positioned by JS against the current scroll host: the window in the shipped
+   page, the frame when the review scaffolding is on. */
 .lrf-sheet{
-  position: fixed;
-  inset: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
   z-index: 50;
   background: rgba(var(--foreground) / 0.5);
 }
@@ -138,7 +142,9 @@
   top: 0;
   right: 0;
   bottom: 0;
-  width: min(26rem, 92vw);
+  /* cqw, not vw: the sheet belongs to .lrf-page, which is the window in the
+     shipped page and the frame under the review scaffolding. */
+  width: min(26rem, 92cqw);
   background: rgba(var(--foreground) / 1);
   color: rgba(var(--background) / 1);
   display: flex;

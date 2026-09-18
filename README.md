@@ -21,10 +21,34 @@ python3 -m http.server 4173
 | `assets/bento.js` | The four-column bento packer and the multi-tag promotion rule. |
 | `assets/app.js` | Page behaviour: nav, search, mobile sheet, filtering, rendering, parallax. |
 
+## Review scaffolding
+
+`assets/review.js` and `assets/review.css` rebuild the prototype desk: the
+grey artboard, the framed viewport, and the two toolbars — concept
+(1 — Three columns / 2 — Bento grid) and frame size (1280 / 375). It opens on
+concept 1 at 1280, as the original prototype did, and both toolbars write to
+the URL so you can link to one combination:
+
+```
+http://localhost:4173/?layout=bento&frame=mobile
+```
+
+`?review=0` turns it all off and the page fills the window as shipped.
+
+The frame keeps its true layout width and scales down to fit a narrow window,
+so "1280" always shows the real 1280 layout. This works because the page's
+breakpoints are container queries on `.lrf-page` rather than media queries —
+that element is the window in the shipped page and the frame under the
+scaffolding, and the same rules serve both.
+
+**To ship the page without any of this:** delete `assets/review.js`,
+`assets/review.css` and the three tagged lines in `index.html`. Nothing in
+the page files depends on them.
+
 ## Layout concepts
 
-The prototype offered two, and both are here. Which one runs is set on the
-`<html>` element and can be overridden for review with a query string:
+Both are here. Which one runs is set on the `<html>` element and can be
+overridden with a query string:
 
 - `data-layout="columns"` (default) — three equal columns in source order, with
   the column-drift parallax. The tail of the list is repeated below the grid so
@@ -42,12 +66,10 @@ are inert.
 
 ## What changed from the prototype
 
-**Prototype scaffolding removed.** The grey artboard, the framed 1280/375
-viewport, and the two toolbars that switched concept and frame size were
-review-harness furniture. The page is now a real page: the frame's container
-queries became viewport media queries at the same 64rem breakpoint, and the
-mobile sheet is `position: fixed` rather than being parked at the frame's
-scroll offset by JS.
+**Prototype scaffolding is separable, not baked in.** The artboard, frame and
+toolbars still exist, but they live in two files the page does not depend on,
+rather than being part of the markup. The page's breakpoints stay container
+queries so the same rules work framed or full-window.
 
 **Inline styles became classes.** Every `style="…"` attribute in the prototype
 has an equivalent rule in the stylesheets, with the same values.

@@ -141,7 +141,7 @@
 .lrf-grid > li{ display: flex; animation: lrfIn var(--dur-slow) var(--ease) both; }
 .lrf-cols3 > li{ will-change: transform; }
 
-@media (min-width: 64rem){
+@container page (min-width: 64rem){
   .lrf-grid{ grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-flow: dense; }
   .lrf-grid.lrf-cols3{ grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-flow: row; }
   .lrf-w2{ grid-column: span 2; }

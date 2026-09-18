@@ -51,6 +51,18 @@ a:hover{ color: rgba(var(--foreground) / 1); }
 
 .lrf-shell{ max-width: var(--container); margin-inline: auto; }
 
+/* The page's sizing container. In the shipped page this spans the viewport and
+   the container queries below behave exactly like media queries. The review
+   scaffolding (assets/review.css) shrinks it to a 1280 or 375 frame, and the
+   same queries then respond to the frame instead of the window — which is how
+   the original design-code prototype worked. */
+.lrf-page{
+  position: relative;
+  container-type: inline-size;
+  container-name: page;
+  background: rgba(var(--background) / 1);
+}
+
 .lrf-icon{ display: grid; place-items: center; flex: none; color: rgba(var(--primary-500) / 1); }
 .lrf-svg{ width: 1.5rem; height: 1.5rem; flex: none; fill: currentColor; }
 .lrf-svg--md{ width: 1.25rem; height: 1.25rem; }
@@ -101,7 +113,7 @@ a:hover{ color: rgba(var(--foreground) / 1); }
 .lrf-navitem:focus-visible .lrf-navroll{ background-size: 100% 2px; }
 
 .lrf-skip{
-  position: fixed;
+  position: absolute;
   left: var(--fl-sm);
   top: -6rem;
   z-index: 60;
@@ -115,7 +127,7 @@ a:hover{ color: rgba(var(--foreground) / 1); }
 
 /* --- Responsive display switches ----------------------------------------- */
 .lrf-desktop{ display: none; }
-@media (min-width: 64rem){
+@container page (min-width: 64rem){
   .lrf-desktop{ display: flex; }
   .lrf-mobile{ display: none !important; }
 }

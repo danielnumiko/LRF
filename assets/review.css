@@ -1,0 +1,80 @@
+/* ==========================================================================
+   Review scaffolding — the prototype desk, frame and toolbars.
+   NOT part of the page. To ship: delete this file, assets/review.js and the
+   three tagged lines in index.html.
+   ========================================================================== */
+:root{ --artboard: 236 236 236; }   /* prototype desk, not a site token */
+
+.lrf-framed{
+  background: rgba(var(--artboard) / 1);
+  padding: var(--fl-lg) var(--fl-sm);
+}
+
+.lrf-proto{
+  width: min(1280px, 100%);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--fl-sm);
+}
+
+/* The frame. Shrinking .lrf-page is what makes the page's own container
+   queries respond to 1280 / 375 instead of the browser window.
+
+   The frame keeps its true layout width and is scaled down to fit a narrow
+   window, so "1280" always shows the real 1280 layout rather than whatever
+   the window happens to allow. Container queries read layout width, not the
+   scaled width, so the page inside is unaffected. */
+.lrf-scaler{
+  align-self: center;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 2px rgba(var(--foreground) / 0.06),
+              0 12px 32px rgba(var(--foreground) / 0.10),
+              0 32px 64px rgba(var(--foreground) / 0.08);
+}
+.lrf-framed .lrf-page{
+  width: var(--frame-w, 1280px);
+  height: var(--frame-h, 836px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  transform: scale(var(--frame-scale, 1));
+  transform-origin: top left;
+}
+
+/* --- Toolbars ------------------------------------------------------------- */
+.lrf-review{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--fl-sm);
+  padding: var(--fl-2xs) 0;
+  color: rgba(var(--foreground) / 1);
+  font-size: var(--f-sm);
+  font-weight: var(--fw-medium);
+}
+.lrf-review__label{ opacity: 0.6; }
+.lrf-review__group{
+  display: flex;
+  gap: var(--line-thickness);
+  padding: var(--line-thickness);
+  border: 1px solid rgba(var(--accessible-grey) / 1);
+  background: rgba(var(--background) / 1);
+  border-radius: var(--radius-md);
+}
+.lrf-review__group--right{ margin-left: auto; }
+.lrf-review__btn{
+  cursor: pointer;
+  border: 0;
+  border-radius: var(--radius-sm);
+  padding: var(--fl-3xs) var(--fl-2xs);
+  font-size: var(--f-sm);
+  font-weight: var(--fw-medium);
+  background: transparent;
+  color: rgba(var(--foreground) / 1);
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.lrf-review__btn[aria-pressed="true"]{
+  background: rgba(var(--primary-500) / 1);
+  color: rgba(var(--background) / 1);
+}
