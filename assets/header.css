@@ -42,7 +42,7 @@
   background: none;
   cursor: pointer;
   padding: var(--fl-sm) 0;
-  font-size: var(--f-sm);
+  font-size: var(--f-xs);
   font-weight: var(--fw-medium);
   color: rgba(var(--foreground) / 1);
   white-space: nowrap;
@@ -90,7 +90,7 @@
   cursor: pointer;
   gap: var(--fl-2xs);
   padding: 0;
-  font-size: var(--f-sm);
+  font-size: var(--f-xs);
   font-weight: var(--fw-medium);
   color: rgba(var(--foreground) / 1);
   white-space: nowrap;
@@ -250,6 +250,12 @@
 .lrf-breadcrumb li{ display: flex; align-items: center; gap: var(--fl-2xs); }
 .lrf-breadcrumb a{ color: rgba(var(--breadcrumb-foreground) / 1); text-decoration: none; }
 .lrf-breadcrumb .lrf-icon{ color: rgba(var(--breadcrumb-accent) / 1); }
+
+/* One step down the theme's own scale for the top-level row: --f-xs rather
+   than the inherited --f-sm, with the chevrons and the magnifier dropped to
+   match. The dropdown panels and the mobile sheet keep --f-sm. */
+.lrf-navbtn .lrf-svg,
+.lrf-searchtoggle .lrf-svg{ width: 1.25rem; height: 1.25rem; }
 
 /* The theme's lg breakpoint is 1280px, not the 1024px the design-code
    prototype assumed. Verified against the aggregated theme CSS: .lg\:gap-12,
