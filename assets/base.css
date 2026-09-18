@@ -127,7 +127,9 @@ a:hover{ color: rgba(var(--foreground) / 1); }
 
 /* --- Responsive display switches ----------------------------------------- */
 .lrf-desktop{ display: none; }
-@container page (min-width: 64rem){
+/* 80rem = 1280px, the theme's lg breakpoint (see assets/header.css). Below
+   it the live site shows the hamburger, so this does too. */
+@container page (min-width: 80rem){
   .lrf-desktop{ display: flex; }
   .lrf-mobile{ display: none !important; }
 }

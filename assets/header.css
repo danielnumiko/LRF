@@ -5,37 +5,44 @@
 
 .lrf-header__ancillary{ background: rgba(var(--ancillary-nav-background) / 1); height: var(--fl-xs); }
 
+/* Spacing values below are the live theme's own (gap-fl-sm-lg, px-fl-2xs-lg,
+   lg:gap-12, lg:w-28), not approximations. */
 .lrf-header__bar{
   display: flex;
   align-items: center;
-  gap: var(--fl-sm);
-  padding: var(--fl-2xs) var(--fl-lg);
+  justify-content: center;
+  gap: calc(1rem + 26 * var(--fluid-bp));              /* gap-fl-sm-lg */
+  padding-inline: calc(0.5rem + 34 * var(--fluid-bp)); /* px-fl-2xs-lg */
   font-size: var(--f-sm);
 }
 
 .lrf-logo{
   display: flex;
   align-items: center;
-  height: 6.25rem;
-  padding: var(--fl-3xs) 0;
+  height: 100px;
+  padding-block: 0.25rem;
+  margin-left: 0;
   margin-right: auto;
   text-decoration: none;
 }
 .lrf-logo svg{ height: 100%; width: auto; }
 
 /* --- Primary nav (desktop) ------------------------------------------------ */
-.lrf-nav{ flex: 1; align-items: stretch; justify-content: center; gap: var(--fl-lg); }
+/* A flat 3rem between items, as the theme sets — not a fluid step. This is
+   what keeps the run of items evenly spaced. */
+.lrf-nav{ flex: 1; align-items: stretch; justify-content: center; gap: 3rem; }
 .lrf-nav__section{ position: relative; display: flex; }
 
 .lrf-navbtn{
   display: flex;
   align-items: center;
+  height: 100%;
   gap: var(--fl-2xs);
   border: 0;
   background: none;
   cursor: pointer;
-  padding: var(--fl-2xs) 0;
-  font-size: var(--f-base);
+  padding: var(--fl-sm) 0;
+  font-size: var(--f-sm);
   font-weight: var(--fw-medium);
   color: rgba(var(--foreground) / 1);
   white-space: nowrap;
@@ -76,13 +83,14 @@
 
 .lrf-searchtoggle{
   align-items: center;
-  gap: var(--fl-2xs);
-  margin-left: auto;
+  justify-content: flex-end;
+  width: 6rem;
   border: 0;
   background: none;
   cursor: pointer;
-  padding: var(--fl-2xs) 0;
-  font-size: var(--f-base);
+  gap: var(--fl-2xs);
+  padding: 0;
+  font-size: var(--f-sm);
   font-weight: var(--fw-medium);
   color: rgba(var(--foreground) / 1);
   white-space: nowrap;
@@ -242,3 +250,11 @@
 .lrf-breadcrumb li{ display: flex; align-items: center; gap: var(--fl-2xs); }
 .lrf-breadcrumb a{ color: rgba(var(--breadcrumb-foreground) / 1); text-decoration: none; }
 .lrf-breadcrumb .lrf-icon{ color: rgba(var(--breadcrumb-accent) / 1); }
+
+/* The theme's lg breakpoint is 1280px, not the 1024px the design-code
+   prototype assumed. Verified against the aggregated theme CSS: .lg\:gap-12,
+   .lg\:w-28 and .lg\:hidden all sit inside @media (min-width:1280px). */
+@container page (min-width: 80rem){
+  .lrf-logo{ padding-block: 0.75rem; }
+  .lrf-searchtoggle{ width: 7rem; }
+}

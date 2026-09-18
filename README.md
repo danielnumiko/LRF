@@ -70,6 +70,24 @@ are inert.
 
 ## What changed from the prototype
 
+**Header spacing comes from the live theme, not the prototype.** The
+design-code prototype approximated several header values; these are now the
+theme's own, read out of the site's aggregated CSS:
+
+| | Prototype | Live theme |
+| --- | --- | --- |
+| Nav item gap | `--fl-lg` (fluid, ~36px) | `lg:gap-12` — a flat `3rem` |
+| Search control | auto-margin, sized to content | `lg:w-28` — a fixed `7rem`, right-aligned |
+| Nav / search type | `--f-base` (~18px) | inherits `text-fl-sm` (~15.6px) |
+| Header bar gap | `--fl-sm` | `gap-fl-sm-lg` |
+| Header bar padding | `--fl-lg` | `px-fl-2xs-lg` |
+| Desktop breakpoint | 64rem (1024px) | **80rem (1280px)** — `lg` in this theme |
+
+The fluid nav gap and the auto-margin search were what made the spacing read
+as uneven: the run of items breathed with the viewport while the gap before
+Search was only ever whatever space was left over. A flat 3rem and a fixed
+7rem block give the even rhythm the live site has.
+
 **Prototype scaffolding is separable, not baked in.** The artboard, frame and
 toolbars still exist, but they live in two files the page does not depend on,
 rather than being part of the markup. The page's breakpoints stay container
