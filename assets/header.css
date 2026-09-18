@@ -8,10 +8,10 @@
 /* Spacing values below are the live theme's own (gap-fl-sm-lg, px-fl-2xs-lg,
    lg:gap-12, lg:w-28), not approximations. */
 .lrf-header__bar{
-  /* Between --f-xs and --f-sm. The scale has no step there, and the row sits
-     better between the two than on either. Stays fluid because both operands
-     are. */
-  --nav-size: calc((var(--f-xs) + var(--f-sm)) / 2);
+  /* The one knob for the top-level row's type size. Now back on --f-sm,
+     which is also what the live theme renders this row at. The next step up
+     is --f-base, where the design-code prototype had it. */
+  --nav-size: var(--f-sm);
   display: flex;
   align-items: center;
   justify-content: center;
