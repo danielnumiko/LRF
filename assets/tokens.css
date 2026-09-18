@@ -1,0 +1,117 @@
+/* ==========================================================================
+   LRF THEME TOKENS
+   Lifted verbatim from the live Drupal theme (themes/custom/numiko/dist,
+   aggregated css_FWgmKri….css). Names match the theme's own custom properties
+   so this maps 1:1. Colour channels are space-separated RGB triplets, as on
+   the live site, so rgba(var(--token) / <alpha>) works exactly as it does in
+   the theme.
+   ========================================================================== */
+:root{
+  /* --- Palette: fuchsia-light (site default [data-theme=fuchsia-light]) --- */
+  --primary-50: 255 252 253;
+  --primary-100: 253 232 242;
+  --primary-200: 251 205 215;
+  --primary-500: 229 0 110;   /* brand pink — logo, CTAs, accents */
+  --primary-600: 188 0 91;
+  --primary-700: 153 0 73;
+  --primary-800: 166 0 56;
+  --accent: 229 0 110;
+  --foreground: 0 0 0;
+  --background: 255 255 255;
+  --body-text: 68 68 68;
+  --keyline: 251 205 215;
+  --accessible-grey: 215 215 215;
+  --grey-800: 68 68 68;
+  --error: 199 56 11;
+  --button-primary-text: 255 255 255;
+  --button-primary-text-hover: 255 255 255;
+  --button-primary-background: 229 0 110;
+  --button-primary-background-hover: 0 0 0;
+  --tag-background: 253 232 242;
+  --tag-foreground: 188 0 91;
+  --teaser-image-background: 253 232 242;
+  --breadcrumb-background: 0 0 0;
+  --breadcrumb-foreground: 255 255 255;
+  --breadcrumb-accent: 229 0 110;
+  --ancillary-nav-background: 229 0 110;
+  --newsletter-background: 255 255 255;
+  --newsletter-foreground: 0 0 0;
+  --footer-background: 188 0 91;
+  --footer-numiko-foreground: 255 255 255;
+  --footer-numiko-background: 153 0 73;
+
+  /* --- Section tint backgrounds (.theme-* helpers in the theme) --- */
+  --theme-fuchsia: 253 232 242;
+  --theme-red: 254 227 226;
+  --theme-yellow: 255 250 194;
+  --theme-green: 235 253 202;
+  --theme-blue: 230 238 248;
+  --theme-purple: 242 236 251;
+
+  /* --- Strategic theme accents.
+         Only two priority palettes ship in this page's CSS bundle:
+         fuchsia (site default) and gsec-light (primary-500: 44 149 174).
+         The other three are mapped onto the theme's own .theme-* tints. --- */
+  --accent-maritime: var(--primary-500);          /* fuchsia-light */
+  --accent-evidence: 44 149 174;                   /* gsec-light primary-500 */
+  --accent-infrastructure: 21 105 73;              /* AA-safe ink over --theme-green */
+  --accent-skills: 122 82 0;                       /* AA-safe ink over --theme-yellow */
+  --accent-heritage: 27 62 122;                    /* AA-safe ink over --theme-blue */
+
+  /* --- Fluid engine (drives every size + space token below) --- */
+  --fluid-min-width: 320;
+  --fluid-max-width: 2560;
+  --fluid-screen: 100vw;
+  --fluid-bp: calc((var(--fluid-screen) - var(--fluid-min-width) / 16 * 1rem) / (var(--fluid-max-width) - var(--fluid-min-width)));
+
+  /* --- Type scale (--f-*: min px → max px, interpolated) --- */
+  --f-xs:   calc((12.64 / 16) * 1rem + (14.58 - 12.64) * var(--fluid-bp));
+  --f-sm:   calc((14.22 / 16) * 1rem + (17.5  - 14.22) * var(--fluid-bp));
+  --f-base: calc((16    / 16) * 1rem + (21    - 16   ) * var(--fluid-bp));
+  --f-lg:   calc((18    / 16) * 1rem + (25.2  - 18   ) * var(--fluid-bp));
+  --f-xl:   calc((20.25 / 16) * 1rem + (30.24 - 20.25) * var(--fluid-bp));
+  --f-2xl:  calc((22.78 / 16) * 1rem + (36.29 - 22.78) * var(--fluid-bp));
+  --f-3xl:  calc((25.63 / 16) * 1rem + (43.55 - 25.63) * var(--fluid-bp));
+  --f-4xl:  calc((28.83 / 16) * 1rem + (52.25 - 28.83) * var(--fluid-bp));
+  --f-5xl:  calc((32.44 / 16) * 1rem + (62.71 - 32.44) * var(--fluid-bp));
+
+  /* --- Fluid space rhythm (fl-* utilities in the theme) --- */
+  --fl-3xs: calc(0.25rem + 1.25 * var(--fluid-bp));
+  --fl-2xs: calc(0.5rem  + 2.5  * var(--fluid-bp));
+  --fl-xs:  calc(0.75rem + 3.75 * var(--fluid-bp));
+  --fl-sm:  calc(1rem    + 5    * var(--fluid-bp));
+  --fl-md:  calc(1.5rem  + 7.5  * var(--fluid-bp));
+  --fl-lg:  calc(2rem    + 10   * var(--fluid-bp));
+  --fl-xl:  calc(3rem    + 15   * var(--fluid-bp));
+  --fl-2xl: calc(4rem    + 20   * var(--fluid-bp));
+
+  /* --- Type family: DMSans 400/500 on the live site --- */
+  --font-sans: "DM Sans", DMSans, Arial, sans-serif;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --lh-heading: 1.2;
+  --lh-body: 1.6;
+
+  /* --- Layout --- */
+  --container: 1920px;
+  --line-thickness: max(1px, 0.5px);
+  --grid-cols-desktop: 3;
+  --tile-min: 22rem;
+
+  /* --- Radii --- */
+  --radius-none: 0;
+  --radius-sm: 0.125rem;
+  --radius-md: 0.3125rem;
+  --radius-pill: 9999px;
+
+  /* --- Motion --- */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 0.2s;
+  --dur: 0.3s;
+  --dur-slow: 0.5s;
+
+  /* --- Focus ring (theme uses ring-2 + ring-offset-4) --- */
+  --focus-width: 2px;
+  --focus-offset: 4px;
+}
+@media (min-width: 2560px){ :root{ --fluid-screen: calc(var(--fluid-max-width) * 1px); } }

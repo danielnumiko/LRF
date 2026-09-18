@@ -1,0 +1,128 @@
+/* ==========================================================================
+   Base / reset — as the prototype set it, minus the artboard desk.
+   ========================================================================== */
+*{ box-sizing: border-box; }
+
+/* [hidden] must beat the display values the component classes set. */
+[hidden]{ display: none !important; }
+
+html{ min-height: 100%; }
+
+body{
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  font-weight: var(--fw-regular);
+  font-size: var(--f-base);
+  line-height: var(--lh-body);
+  color: rgba(var(--body-text) / 1);
+  background: rgba(var(--background) / 1);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, p, ul, ol, figure, fieldset, legend{ margin: 0; padding: 0; }
+h1, h2, h3{ font-weight: var(--fw-medium); color: rgba(var(--foreground) / 1); line-height: var(--lh-heading); }
+ul, ol{ list-style: none; }
+img{ display: block; max-width: 100%; }
+button{ font: inherit; color: inherit; }
+
+a{
+  color: rgba(var(--primary-600) / 1);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+a:hover{ color: rgba(var(--foreground) / 1); }
+
+:focus-visible{
+  outline: var(--focus-width) solid rgba(var(--foreground) / 1);
+  outline-offset: var(--focus-offset);
+}
+
+/* --- Helpers -------------------------------------------------------------- */
+.lrf-vh{
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.lrf-shell{ max-width: var(--container); margin-inline: auto; }
+
+.lrf-icon{ display: grid; place-items: center; flex: none; color: rgba(var(--primary-500) / 1); }
+.lrf-svg{ width: 1.5rem; height: 1.5rem; flex: none; fill: currentColor; }
+.lrf-svg--md{ width: 1.25rem; height: 1.25rem; }
+.lrf-svg--sm{ width: 1rem; height: 1rem; }
+.lrf-svg--xs{ width: 0.875rem; height: 0.875rem; }
+
+/* Primary button / CTA — the theme's solid pink button. */
+.lrf-btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--fl-2xs);
+  cursor: pointer;
+  text-decoration: none;
+  border: 2px solid rgba(var(--button-primary-background) / 1);
+  border-radius: var(--radius-md);
+  background: rgba(var(--button-primary-background) / 1);
+  color: rgba(var(--button-primary-text) / 1);
+  font-weight: var(--fw-medium);
+  line-height: 1.2;
+  padding: var(--fl-sm);
+  transition: background-color var(--dur-slow) var(--ease),
+              border-color var(--dur-slow) var(--ease),
+              color var(--dur-slow) var(--ease);
+}
+.lrf-btn:hover{
+  background: rgba(var(--button-primary-background-hover) / 1);
+  border-color: rgba(var(--button-primary-background-hover) / 1);
+  color: rgba(var(--button-primary-text-hover) / 1);
+}
+/* On the black search panel the hover inverts to white instead of black. */
+.lrf-btn--on-dark:hover{
+  background: rgba(var(--background) / 1);
+  border-color: rgba(var(--background) / 1);
+  color: rgba(var(--foreground) / 1);
+}
+
+/* Underline sweep used on every nav-ish link in the theme. */
+.lrf-navroll{
+  background-image: linear-gradient(to right,
+    rgba(var(--primary-500) / 1), rgba(var(--primary-500) / 1));
+  background-size: 0 2px;
+  background-position: left bottom;
+  background-repeat: no-repeat;
+  transition: background-size var(--dur) var(--ease);
+}
+.lrf-navitem:hover .lrf-navroll,
+.lrf-navitem:focus-visible .lrf-navroll{ background-size: 100% 2px; }
+
+.lrf-skip{
+  position: fixed;
+  left: var(--fl-sm);
+  top: -6rem;
+  z-index: 60;
+  background: rgba(var(--background) / 1);
+  color: rgba(var(--foreground) / 1);
+  font-weight: var(--fw-medium);
+  padding: var(--fl-2xs) var(--fl-sm);
+  border-radius: var(--radius-md);
+}
+.lrf-skip:focus{ top: var(--fl-sm); }
+
+/* --- Responsive display switches ----------------------------------------- */
+.lrf-desktop{ display: none; }
+@media (min-width: 64rem){
+  .lrf-desktop{ display: flex; }
+  .lrf-mobile{ display: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
